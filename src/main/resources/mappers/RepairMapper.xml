@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dbis.asset.mapper.RepairMapper" >
+  <resultMap id="BaseResultMap" type="com.dbis.asset.pojo.Repair" >
+    <id column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="as_name" property="asName" jdbcType="VARCHAR" />
+    <result column="need_time" property="needTime" jdbcType="VARCHAR" />
+    <result column="cost" property="cost" jdbcType="REAL" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="people" property="people" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    rid, as_name, need_time, cost, reason, date, people, phone, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from repair
+    where rid = #{rid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from repair
+    where rid = #{rid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dbis.asset.pojo.Repair" >
+    <selectKey resultType="java.lang.Integer" keyProperty="rid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into repair (as_name, need_time, cost, 
+      reason, date, people, 
+      phone, remark)
+    values (#{asName,jdbcType=VARCHAR}, #{needTime,jdbcType=VARCHAR}, #{cost,jdbcType=REAL}, 
+      #{reason,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, #{people,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dbis.asset.pojo.Repair" >
+    <selectKey resultType="java.lang.Integer" keyProperty="rid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into repair
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="asName != null" >
+        as_name,
+      </if>
+      <if test="needTime != null" >
+        need_time,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="people != null" >
+        people,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="asName != null" >
+        #{asName,jdbcType=VARCHAR},
+      </if>
+      <if test="needTime != null" >
+        #{needTime,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=REAL},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="people != null" >
+        #{people,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dbis.asset.pojo.Repair" >
+    update repair
+    <set >
+      <if test="asName != null" >
+        as_name = #{asName,jdbcType=VARCHAR},
+      </if>
+      <if test="needTime != null" >
+        need_time = #{needTime,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null" >
+        cost = #{cost,jdbcType=REAL},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="people != null" >
+        people = #{people,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dbis.asset.pojo.Repair" >
+    update repair
+    set as_name = #{asName,jdbcType=VARCHAR},
+      need_time = #{needTime,jdbcType=VARCHAR},
+      cost = #{cost,jdbcType=REAL},
+      reason = #{reason,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      people = #{people,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+</mapper>

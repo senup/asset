@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dbis.asset.mapper.LendMapper" >
+  <resultMap id="BaseResultMap" type="com.dbis.asset.pojo.Lend" >
+    <id column="lid" property="lid" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="use_date" property="useDate" jdbcType="TIMESTAMP" />
+    <result column="ret_date" property="retDate" jdbcType="TIMESTAMP" />
+    <result column="is_return" property="isReturn" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    lid, user_id, use_date, ret_date, is_return, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from lend
+    where lid = #{lid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from lend
+    where lid = #{lid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dbis.asset.pojo.Lend" >
+    <selectKey resultType="java.lang.Integer" keyProperty="lid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into lend (user_id, use_date, ret_date, 
+      is_return, remark)
+    values (#{userId,jdbcType=VARCHAR}, #{useDate,jdbcType=TIMESTAMP}, #{retDate,jdbcType=TIMESTAMP}, 
+      #{isReturn,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dbis.asset.pojo.Lend" >
+    <selectKey resultType="java.lang.Integer" keyProperty="lid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into lend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="useDate != null" >
+        use_date,
+      </if>
+      <if test="retDate != null" >
+        ret_date,
+      </if>
+      <if test="isReturn != null" >
+        is_return,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="useDate != null" >
+        #{useDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="retDate != null" >
+        #{retDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isReturn != null" >
+        #{isReturn,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dbis.asset.pojo.Lend" >
+    update lend
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="useDate != null" >
+        use_date = #{useDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="retDate != null" >
+        ret_date = #{retDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isReturn != null" >
+        is_return = #{isReturn,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where lid = #{lid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dbis.asset.pojo.Lend" >
+    update lend
+    set user_id = #{userId,jdbcType=VARCHAR},
+      use_date = #{useDate,jdbcType=TIMESTAMP},
+      ret_date = #{retDate,jdbcType=TIMESTAMP},
+      is_return = #{isReturn,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where lid = #{lid,jdbcType=INTEGER}
+  </update>
+</mapper>
