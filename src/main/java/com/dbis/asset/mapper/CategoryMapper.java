@@ -2,6 +2,8 @@ package com.dbis.asset.mapper;
 
 import com.dbis.asset.pojo.Category;
 
+import java.util.List;
+
 public interface CategoryMapper {
     int deleteByPrimaryKey(Integer cid);
 
@@ -11,7 +13,7 @@ public interface CategoryMapper {
 
     Category selectByPrimaryKey(Integer cid);
 
-
+    List<Category> selectAll();
 
     int updateByPrimaryKeySelective(Category record);
 

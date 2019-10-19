@@ -69,7 +69,7 @@ public class AssetController {
     @PostMapping
     public Map<String,Object> addAsset(@ModelAttribute Asset asset){
         Map<String, Object> map = new HashMap<>();
-        if(assetMapper.insert(asset)!=0){
+        if(assetMapper.insert(asset)>0){
             map.put("status",1);
             return map;
         }else{
@@ -81,7 +81,7 @@ public class AssetController {
     @DeleteMapping("/{id}")
     public Map<String,Object> deleteAsset(@PathVariable int id){
         Map<String, Object> map = new HashMap<>();
-        if(assetMapper.deleteByPrimaryKey(id)!=0){
+        if(assetMapper.deleteByPrimaryKey(id)>0){
             map.put("status" , 1);
             return map;
         }else{
@@ -115,7 +115,7 @@ public class AssetController {
     @PutMapping("/")
     public Map<String,Object> updateDevice(@ModelAttribute Asset asset){
         Map<String, Object> map = new HashMap<>();
-        if(assetMapper.updateByPrimaryKey(asset)!=0){
+        if(assetMapper.updateByPrimaryKey(asset)>0){
             map.put("status" , 1);
             return map;
         }else{
