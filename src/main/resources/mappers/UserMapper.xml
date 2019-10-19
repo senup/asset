@@ -1,128 +1,283 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dbis.asset.mapper.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.dbis.asset.pojo.User" >
-    <id column="uid" property="uid" jdbcType="INTEGER" />
-    <result column="username" property="username" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="power" property="power" jdbcType="VARCHAR" />
-    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
-    <result column="real_name" property="realName" jdbcType="VARCHAR" />
-    <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="email" property="email" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    uid, username, password, power, creat_time, real_name, phone, email
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from user
-    where uid = #{uid,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from user
-    where uid = #{uid,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.dbis.asset.pojo.User" >
-    <selectKey resultType="java.lang.Integer" keyProperty="uid" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into user (username, password, power, 
-      creat_time, real_name, phone, 
-      email)
-    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{power,jdbcType=VARCHAR}, 
-      #{creatTime,jdbcType=TIMESTAMP}, #{realName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.dbis.asset.pojo.User" >
-    <selectKey resultType="java.lang.Integer" keyProperty="uid" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="username != null" >
-        username,
-      </if>
-      <if test="password != null" >
-        password,
-      </if>
-      <if test="power != null" >
-        power,
-      </if>
-      <if test="creatTime != null" >
-        creat_time,
-      </if>
-      <if test="realName != null" >
-        real_name,
-      </if>
-      <if test="phone != null" >
-        phone,
-      </if>
-      <if test="email != null" >
-        email,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="power != null" >
-        #{power,jdbcType=VARCHAR},
-      </if>
-      <if test="creatTime != null" >
-        #{creatTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="realName != null" >
-        #{realName,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null" >
-        #{email,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dbis.asset.pojo.User" >
-    update user
-    <set >
-      <if test="username != null" >
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="power != null" >
-        power = #{power,jdbcType=VARCHAR},
-      </if>
-      <if test="creatTime != null" >
-        creat_time = #{creatTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="realName != null" >
-        real_name = #{realName,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null" >
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where uid = #{uid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.dbis.asset.pojo.User" >
-    update user
-    set username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      power = #{power,jdbcType=VARCHAR},
-      creat_time = #{creatTime,jdbcType=TIMESTAMP},
-      real_name = #{realName,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR}
-    where uid = #{uid,jdbcType=INTEGER}
-  </update>
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.dbis.asset.mapper.UserMapper">
+    <!--还没使用-->
+    <resultMap id="userMap" type="com.dbis.asset.pojo.User">
+        <id column="id" property="id"/>
+        <result column="userName" property="userName"/>
+        <result column="userNickname" property="userNickname"/>
+        <result column="userPhoneNo" property="userPhoneNo"/>
+        <result column="userGender" property="userGender"/>
+        <result column="userMail" property="userMail"/>
+<!--
+        <association property="" column="">
+
+        </association>
+-->
+    </resultMap>
+    <!-- 对应的插入字段的名字 -->
+    <sql id="key">
+        <trim suffixOverrides=",">
+            <if test="userName != null and userName != ''">
+                user_name,
+            </if>
+            <if test="userPassword != null and userPassword != ''">
+                user_password,
+            </if>
+            <if test="userNickname != null and userNickname !=''">
+                user_nickname,
+            </if>
+            <if test="userPhoneNo != null and userPhoneNo != ''">
+                user_phone_no,
+            </if>
+            <if test="userGender != null and userGender !=''">
+                user_gender,
+            </if>
+            <if test="userMail != null and userMail != ''">
+                user_mail,
+            </if>
+            <if test="userBirthday != null and userBirthday != ''">
+                user_birthday,
+            </if>
+            <if test="userState != null and userState != ''">
+                user_state,
+            </if>
+            <if test="userIsAdministrator != null and userIsAdministrator != ''">
+                user_is_administrator,
+            </if>
+            <if test="userSort != null and userSort != ''">
+                user_sort,
+            </if>
+            <if test="userDepartment != null and userDepartment != ''">
+                user_department,
+            </if>
+            <if test="userPrivilege != null and userPrivilege != ''">
+                user_privilege,
+            </if>
+            <if test="userMotto != null and userMotto != ''">
+                user_motto,
+            </if>
+            <if test="userHobby != null and userHobby != ''">
+                user_hobby,
+            </if>
+            <if test="userNewpassword != null and userNewpassword != ''">
+                user_newpassword,
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 对应的插入字段的值 -->
+    <sql id="values">
+        <trim suffixOverrides=",">
+            <if test="userName != null and userName != ''">
+                #{userName},
+            </if>
+            <if test="userPassword != null and userPassword != ''">
+                #{userPassword},
+            </if>
+            <if test="userNickname != null and userNickname !=''">
+                #{userNickname},
+            </if>
+            <if test="userPhoneNo != null and userPhoneNo != ''">
+                #{userPhoneNo},
+            </if>
+            <if test="userGender != null and userGender !=''">
+                #{userGender},
+            </if>
+            <if test="userMail != null and userMail != ''">
+                #{userMail},
+            </if>
+            <if test="userBirthday != null and userBirthday != ''">
+                #{userBirthday},
+            </if>
+            <if test="userState != null and userState != ''">
+                #{userState},
+            </if>
+            <if test="userIsAdministrator != null and userIsAdministrator != ''">
+                #{userIsAdministrator},
+            </if>
+            <if test="userSort != null and userSort != ''">
+                #{userSort},
+            </if>
+            <if test="userDepartment != null and userDepartment != ''">
+                #{userDepartment},
+            </if>
+            <if test="userPrivilege != null and userPrivilege != ''">
+                #{userPrivilege},
+            </if>
+            <if test="userMotto != null and userMotto != ''">
+                #{userMotto},
+            </if>
+            <if test="userHobby != null and userHobby != ''">
+                #{userHobby},
+            </if>
+            <if test="userNewpassword != null and userNewpassword != ''">
+                #{userNewpassword},
+            </if>
+        </trim>
+    </sql>
+
+    <!--添加用户信息-->
+    <insert id="insertUserInformation" parameterType="com.dbis.asset.pojo.User">
+        insert into user (<include refid="key"/>)
+            values (<include refid="values"/>)
+    </insert>
+
+    <!--更新用户信息-->
+    <update id="updateUserInfomation" parameterType="com.dbis.asset.pojo.User">
+        update user
+        <set>
+            <if test="userName != null and userName != ''">
+                 user_name = #{userName},
+            </if>
+            <if test="userPassword != null and userPassword != ''">
+                user_password = #{userPassword},
+            </if>
+            <if test="userNickname != null and userNickname !=''">
+                 user_nickname = #{userNickname},
+            </if>
+            <if test="userPhoneNo != null and userPhoneNo != ''">
+                 user_phone_no = #{userPhoneNo},
+            </if>
+            <if test="userGender != null and userGender !=''">
+                 user_gender = #{userGender},
+            </if>
+            <if test="userMail != null and userMail != ''">
+                 user_mail = #{userMail},
+            </if>
+            <if test="userBirthday != null and userBirthday != ''">
+                 user_birthday = #{userBirthday},
+            </if>
+            <if test="userState != null and userState != ''">
+                 user_state = #{userState},
+            </if>
+            <if test="userIsAdministrator != null and userIsAdministrator != ''">
+                 user_is_administrator = #{userIsAdministrator},
+            </if>
+            <if test="userSort != null and userSort != ''">
+                 user_sort = #{userSort},
+            </if>
+            <if test="userDepartment != null and userDepartment != ''">
+                user_department = #{userDepartment},
+            </if>
+            <if test="userPrivilege != null and userPrivilege != ''">
+                user_privilege = #{userPrivilege},
+            </if>
+            <if test="userMotto != null and userMotto != ''">
+                user_motto = #{userMotto},
+            </if>
+            <if test="userHobby != null and userHobby != ''">
+                user_hobby = #{userHobby},
+            </if>
+            <if test="userNewpassword != null and userNewpassword != ''">
+                user_newpassword = #{userNewpassword},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--删除指定用户-->
+    <delete id="deleteUserInfomation" parameterType="com.dbis.asset.pojo.User">
+        delete from user
+            <where>
+                <if test="id != null and id != ''">
+                    and id = #{id}
+                </if>
+                <if test="userName != null and userName != ''">
+                    and user_name = #{userName}
+                </if>
+                <if test="userNickname != null and userNickname !=''">
+                    and user_nickname = #{userNickname}
+                </if>
+                <if test="userPhoneNo != null and userPhoneNo != ''">
+                    and user_phone_no = #{userPhoneNo}
+                </if>
+                <if test="userGender != null and userGender !=''">
+                    and user_gender = #{userGender}
+                </if>
+                <if test="userMail != null and userMail != ''">
+                    and user_mail = #{userMail}
+                </if>
+                <if test="userBirthday != null and userBirthday != ''">
+                    and user_birthday = #{userBirthday}
+                </if>
+                <if test="userState != null and userState != ''">
+                    and user_state = #{userState}
+                </if>
+                <if test="userIsAdministrator != null and userIsAdministrator != ''">
+                    and user_is_administrator = #{userIsAdministrator}
+                </if>
+                <if test="userSort != null and userSort != ''">
+                    and user_sort = #{userSort}
+                </if>
+                <if test="userDepartment != null and userDepartment != ''">
+                    and user_department = #{userDepartment}
+                </if>
+                <if test="userPrivilege != null and userPrivilege != ''">
+                    and user_privilege = #{userPrivilege}
+                </if>
+                <if test="userMotto != null and userMotto != ''">
+                    and user_motto = #{userMotto}
+                </if>
+                <if test="userHobby != null and userHobby != ''">
+                    and user_hobby = #{userHobby}
+                </if>
+                <if test="userNewpassword != null and userNewpassword != ''">
+                    and user_newpassword = #{userNewpassword}
+                </if>
+            </where>
+    </delete>
+
+    <!--批量删除指定用户-->
+    <delete id="deleteMoreUserById" parameterType="list">
+        delete from user where id in
+            <foreach collection="list" item="id" index="arr"
+                     open="(" separator="," close=")">
+                #{id}
+            </foreach>
+    </delete>
+
+    <!--查询所有用户-->
+    <select id="queryUserList" resultType="com.dbis.asset.pojo.User">
+        select * from user
+    </select>
+
+    <!--查询总数-->
+    <select id="getUserTotalNumber" resultType="java.lang.Integer">
+        select count(*) from user
+    </select>
+
+    <!--单条件查询指定用户-->
+    <select id="queryUserSingleCondition" resultType="com.dbis.asset.pojo.User" parameterType="com.dbis.asset.pojo.User">
+        select * from user
+            <where>
+                <choose>
+                    <when test="id != null and id != ''">
+                        and id = #{id}
+                    </when>
+                    <when test="userName != null and userName != ''">
+                        and user_name like concat('%',#{userName},'%')
+                    </when>
+                    <when test="userNickname != null and userNickname !=''">
+                        and user_nickname like concat('%',#{userNickname},'%')
+                    </when>
+                    <when test="userPhoneNo != null and userPhoneNo != ''">
+                        and user_phone_no like concat('%',#{userPhoneNo},'%')
+                    </when>
+                    <when test="userGender != null and userGender !=''">
+                        and user_gender like concat('%',#{userGender},'%')
+                    </when>
+                    <when test="userMail != null and userMail != ''">
+                        and user_mail like concat('%',#{userMail},'%')
+                    </when>
+                    <otherwise>
+                        and id is not null
+                    </otherwise>
+                </choose>
+            </where>
+    </select>
+
+
 </mapper>
