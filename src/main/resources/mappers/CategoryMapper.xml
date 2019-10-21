@@ -1,26 +1,77 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dbis.asset.mapper.CategoryMapper" >
+
   <resultMap id="BaseResultMap" type="com.dbis.asset.pojo.Category" >
     <id column="cid" property="cid" jdbcType="INTEGER" />
     <result column="cate_name" property="cateName" jdbcType="VARCHAR" />
   </resultMap>
+
+  <resultMap id="MapWithAsset" type="com.dbis.asset.pojo.Category">
+    <id column="cid" property="cid"/>
+    <result column="cate_name" property="cateName"/>
+    <collection property="assets" ofType="com.dbis.asset.pojo.Asset">
+      <id column="aid" property="aid"/>
+      <result column="asset_name" property="assetName" jdbcType="VARCHAR" />
+      <result column="brand" property="brand" jdbcType="VARCHAR" />
+      <result column="price" property="price" jdbcType="DECIMAL" />
+      <result column="count" property="count" jdbcType="INTEGER" />
+      <result column="remark" property="remark" jdbcType="VARCHAR" />
+      <result column="image" property="image" jdbcType="VARCHAR" />
+      <result column="status" property="status" jdbcType="INTEGER" />
+      <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+      <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+      <result column="user_id" property="userId" jdbcType="INTEGER" />
+      <result column="cate_id" property="cateId" jdbcType="INTEGER" />
+    </collection>
+  </resultMap>
+
+  <select id="selectWithAsset" resultMap="MapWithAsset" parameterType="int">
+    select c.*,
+    a.aid,
+    a.asset_name,
+    a.brand,
+    a.price,
+    a.count,
+    a.remark,
+    a.image,
+    a.status,
+    a.modify_time,
+    a.pay_time,
+    a.user_id,
+    a.cate_id
+    from asset as a
+    left join category as c
+    on a.cate_id = c.cid
+    where cid = #{cid}
+  </select>
+
   <sql id="Base_Column_List" >
     cid, cate_name
   </sql>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select * from category
+
+
+  <select id="selectAll" resultMap="MapWithAsset">
+    select c.*,a.*
+    from category as c,asset as a
+    where c.cid = a.cate_id
   </select>
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from category
     where cid = #{cid,jdbcType=INTEGER}
   </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from category
     where cid = #{cid,jdbcType=INTEGER}
   </delete>
+
+
   <insert id="insert" parameterType="com.dbis.asset.pojo.Category" >
     <selectKey resultType="java.lang.Integer" keyProperty="cid" order="AFTER" >
       SELECT LAST_INSERT_ID()
@@ -28,6 +79,8 @@
     insert into category (cate_name)
     values (#{cateName,jdbcType=VARCHAR})
   </insert>
+
+
   <insert id="insertSelective" parameterType="com.dbis.asset.pojo.Category" >
     <selectKey resultType="java.lang.Integer" keyProperty="cid" order="AFTER" >
       SELECT LAST_INSERT_ID()
@@ -44,6 +97,8 @@
       </if>
     </trim>
   </insert>
+
+
   <update id="updateByPrimaryKeySelective" parameterType="com.dbis.asset.pojo.Category" >
     update category
     <set >
@@ -53,6 +108,8 @@
     </set>
     where cid = #{cid,jdbcType=INTEGER}
   </update>
+
+
   <update id="updateByPrimaryKey" parameterType="com.dbis.asset.pojo.Category" >
     update category
     set cate_name = #{cateName,jdbcType=VARCHAR}

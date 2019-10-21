@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dbis.asset.mapper.AssetMapper" >
+  <!--基础映射-->
   <resultMap id="BaseResultMap" type="com.dbis.asset.pojo.Asset" >
     <id column="aid" property="aid" jdbcType="INTEGER" />
     <result column="asset_name" property="assetName" jdbcType="VARCHAR" />
@@ -15,6 +16,7 @@
     <result column="cate_id" property="cateId" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
   </resultMap>
+  <!--基础映射带上类别信息-->
   <resultMap id="MapWithCategory" type="com.dbis.asset.pojo.Asset" >
     <id column="aid" property="aid" jdbcType="INTEGER" />
     <result column="asset_name" property="assetName" jdbcType="VARCHAR" />
@@ -30,10 +32,13 @@
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <association property="category" resultMap="com.dbis.asset.mapper.CategoryMapper.BaseResultMap"/>
   </resultMap>
+  <!--可复用sql语句-->
   <sql id="Base_Column_List" >
     aid, asset_name, brand, price, count, remark, image, status, modify_time, pay_time, 
     cate_id, user_id
   </sql>
+
+  <!--查询所有，关联类别表-->
   <select id="selectAllWithCategory" resultMap="MapWithCategory" >
     select
     <include refid="Base_Column_List" />,<include
@@ -41,12 +46,16 @@
     from asset,category
     where cate_id = cid
   </select>
+
+  <!--通过主键查询-->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from asset
     where aid = #{aid,jdbcType=INTEGER}
   </select>
+
+  <!--通过名字查询-->
   <select id="selectByNameWithCategory" resultMap="MapWithCategory" parameterType="String" >
     select
     <include refid="Base_Column_List" />,
@@ -54,6 +63,8 @@
     from asset,category
     where asset_name = #{assetName,jdbcType=VARCHAR} and cate_id = cid
   </select>
+
+  <!--通过主键查询-->
   <select id="selectByPrimaryKeyWithCategory" resultMap="MapWithCategory" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />,
@@ -62,6 +73,7 @@
     where aid = #{aid,jdbcType=INTEGER} and cate_id = cid
   </select>
 
+  <!--模糊搜索-->
   <select id="selectByLike" parameterType="com.dbis.asset.pojo.Asset" resultMap="MapWithCategory">
     select
     <include refid="Base_Column_List" />,
@@ -75,11 +87,13 @@
     </where>
   </select>
 
-
-<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <!--删除通过主键-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from asset
     where aid = #{aid,jdbcType=INTEGER}
   </delete>
+
+  <!--插入-->
   <insert id="insert" parameterType="com.dbis.asset.pojo.Asset" >
     <selectKey resultType="java.lang.Integer" keyProperty="aid" order="AFTER" >
       SELECT LAST_INSERT_ID()
@@ -93,6 +107,8 @@
       #{status,jdbcType=INTEGER}, now(), #{payTime,jdbcType=TIMESTAMP},
       #{cateId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER})
   </insert>
+
+  <!--插入（选择）-->
   <insert id="insertSelective" parameterType="com.dbis.asset.pojo.Asset" >
     <selectKey resultType="java.lang.Integer" keyProperty="aid" order="AFTER" >
       SELECT LAST_INSERT_ID()
@@ -169,6 +185,8 @@
       </if>
     </trim>
   </insert>
+
+  <!--更新有选择-->
   <update id="updateByPrimaryKeySelective" parameterType="com.dbis.asset.pojo.Asset" >
     update asset
     <set >
@@ -208,6 +226,8 @@
     </set>
     where aid = #{aid,jdbcType=INTEGER}
   </update>
+
+  <!--更新 带id-->
   <update id="updateByPrimaryKey" parameterType="com.dbis.asset.pojo.Asset" >
     update asset
     set asset_name = #{assetName,jdbcType=VARCHAR},

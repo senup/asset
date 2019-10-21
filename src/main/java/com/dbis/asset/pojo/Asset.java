@@ -1,34 +1,38 @@
 package com.dbis.asset.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
 @Data
 public class Asset {
-    private Integer aid;
+    private Integer aid;//资产ID
 
-    private String assetName;
+    private String assetName;//资产名称
 
-    private String brand;
+    private String brand;//资产型号
 
-    private BigDecimal price;
+    private BigDecimal price;//价格
 
-    private Integer count;
+    private Integer count;//数量
 
-    private String remark;
+    private String remark;//备注
 
-    private String image;
+    private String image;//图片链接
 
-    private Integer status;
+    private Integer status;//状态
 
-    private Date modifyTime;
+    private Date modifyTime;//修改时间，自动添加
 
-    private Date payTime;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date payTime;//购买时间
 
-    private Integer cateId;
+    private Integer cateId;//目录ID
 
-    private Integer userId;
+    private Integer userId;//用户ID
 
     private Category category;
 
@@ -104,10 +108,12 @@ public class Asset {
         this.modifyTime = modifyTime;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
     public Date getPayTime() {
         return payTime;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
     public void setPayTime(Date payTime) {
         this.payTime = payTime;
     }

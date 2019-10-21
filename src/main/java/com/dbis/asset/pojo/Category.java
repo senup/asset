@@ -2,11 +2,15 @@ package com.dbis.asset.pojo;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Category {
     private Integer cid;
 
     private String cateName;
+
+    private List<Asset> assets;
 
     public Integer getCid() {
         return cid;

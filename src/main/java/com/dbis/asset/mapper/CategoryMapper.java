@@ -15,6 +15,8 @@ public interface CategoryMapper {
 
     List<Category> selectAll();
 
+    List<Category> selectWithAsset(int cid);
+
     int updateByPrimaryKeySelective(Category record);
 
     int updateByPrimaryKey(Category record);

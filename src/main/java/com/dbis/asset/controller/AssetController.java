@@ -7,9 +7,12 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.SimpleFormatter;
 
 /**
  * @ClassName AssetController
@@ -68,6 +71,8 @@ public class AssetController {
     //添加资产
     @PostMapping
     public Map<String,Object> addAsset(@ModelAttribute Asset asset){
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date date=format.parse(asset.getPayTime());
         Map<String, Object> map = new HashMap<>();
         if(assetMapper.insert(asset)>0){
             map.put("status",1);
@@ -101,15 +106,15 @@ public class AssetController {
         return map;
     }
 
-    //根据资产名称查找资产信息
-    @GetMapping("/name/{name}")
-    public Map<String,Object> findDeviceByName(@PathVariable String name){
-        Map<String, Object> map = new HashMap<>();
-        Asset data = assetMapper.selectByNameWithCategory(name);
-        map.put("status",1);
-        map.put("data",data);
-        return map;
-    }
+//    //根据资产名称查找资产信息
+//    @GetMapping("/name/")
+//    public Map<String,Object> findDeviceByName(String name){
+//        Map<String, Object> map = new HashMap<>();
+//        Asset data = assetMapper.selectByNameWithCategory(name);
+//        map.put("status",1);
+//        map.put("data",data);
+//        return map;
+//    }
 
     //更新资产信息
     @PutMapping("/")

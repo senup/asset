@@ -51,6 +51,17 @@ public class CategoryController {
 
     }
 
+    //根据Id 查找单个类别底下所有资产信息
+    @GetMapping("/detail/{id}")
+    public Map<String,Object> findWithAssetById(@PathVariable int id){
+        Map<String, Object> map = new HashMap<>();
+        List<Category> category = categoryMapper.selectWithAsset(id);
+        map.put("data",category);
+        map.put("status",1);
+        return map;
+
+    }
+
     //添加类别
     @PostMapping
     public Map<String,Object> addCategory(@ModelAttribute Category category){
