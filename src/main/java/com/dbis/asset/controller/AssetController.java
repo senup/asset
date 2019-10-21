@@ -7,12 +7,9 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.SimpleFormatter;
 
 /**
  * @ClassName AssetController
@@ -53,7 +50,15 @@ public class AssetController {
 
 
 
-    //模糊搜索
+
+    /**
+     * 功能描述: //模糊搜索<br>
+     * 〈〉
+     * @Param: [asset, pageNum, pageSize]
+     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     * @Author: tom
+     * @Date: 2019/10/21 17:42
+     */
     @GetMapping("/find")
     public Map<String,Object> findByLike(@ModelAttribute Asset asset,
                                          @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,
@@ -68,7 +73,15 @@ public class AssetController {
         return map;
     }
 
-    //添加资产
+
+    /**
+     * 功能描述: //添加资产<br>
+     * 〈〉
+     * @Param: [asset]
+     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     * @Author: tom
+     * @Date: 2019/10/21 17:42
+     */
     @PostMapping
     public Map<String,Object> addAsset(@ModelAttribute Asset asset){
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -82,7 +95,15 @@ public class AssetController {
         }
     }
 
-    //根据id删除资产信息
+
+    /**
+     * 功能描述: //根据id删除资产信息<br>
+     * 〈〉
+     * @Param: [id]
+     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     * @Author: tom
+     * @Date: 2019/10/21 17:42
+     */
     @DeleteMapping("/{id}")
     public Map<String,Object> deleteAsset(@PathVariable int id){
         Map<String, Object> map = new HashMap<>();
@@ -96,7 +117,15 @@ public class AssetController {
 
 
 
-    //根据Id查找资产信息
+
+    /**
+     * 功能描述: //根据Id查找资产信息<br>
+     * 〈〉
+     * @Param: [id]
+     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     * @Author: tom
+     * @Date: 2019/10/21 17:42
+     */
     @GetMapping("/{id}")
     public Map<String,Object> findAssetById(@PathVariable int id){
         Map<String, Object> map = new HashMap<>();
@@ -116,7 +145,15 @@ public class AssetController {
 //        return map;
 //    }
 
-    //更新资产信息
+
+    /**
+     * 功能描述: //更新资产信息<br>
+     * 〈〉
+     * @Param: [asset]
+     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     * @Author: tom
+     * @Date: 2019/10/21 17:42
+     */
     @PutMapping("/")
     public Map<String,Object> updateDevice(@ModelAttribute Asset asset){
         Map<String, Object> map = new HashMap<>();

@@ -24,7 +24,15 @@ public class CategoryController {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    //查找所有分类
+
+    /**
+     * 功能描述://查找所有分类 <br>
+     * 〈〉
+     * @Param: [pageNum, pageSize]
+     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     * @Author: tom
+     * @Date: 2019/10/21 17:42
+     */
     @GetMapping
     public Map<String,Object> findAll(
             @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,
@@ -40,7 +48,15 @@ public class CategoryController {
     }
 
 
-    //根据Id查找单个类别
+
+    /**
+     * 功能描述://根据Id查找单个类别 <br>
+     * 〈〉
+     * @Param: [id]
+     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     * @Author: tom
+     * @Date: 2019/10/21 17:43
+     */
     @GetMapping("/{id}")
     public Map<String,Object> findById(@PathVariable int id){
         Map<String, Object> map = new HashMap<>();
@@ -51,7 +67,15 @@ public class CategoryController {
 
     }
 
-    //根据Id 查找单个类别底下所有资产信息
+
+    /**
+     * 功能描述: //根据Id 查找单个类别底下所有资产信息<br>
+     * 〈〉
+     * @Param: [id]
+     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     * @Author: tom
+     * @Date: 2019/10/21 17:43
+     */
     @GetMapping("/detail/{id}")
     public Map<String,Object> findWithAssetById(@PathVariable int id){
         Map<String, Object> map = new HashMap<>();
@@ -62,7 +86,15 @@ public class CategoryController {
 
     }
 
-    //添加类别
+
+    /**
+     * 功能描述: //添加类别<br>
+     * 〈〉
+     * @Param: [category]
+     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     * @Author: tom
+     * @Date: 2019/10/21 17:43
+     */
     @PostMapping
     public Map<String,Object> addCategory(@ModelAttribute Category category){
         Map<String,Object> map = new HashMap<>();
@@ -74,7 +106,15 @@ public class CategoryController {
         }
     }
 
-    //更新类别
+
+    /**
+     * 功能描述: //更新类别<br>
+     * 〈〉
+     * @Param: [category]
+     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     * @Author: tom
+     * @Date: 2019/10/21 17:43
+     */
     @PutMapping
     public Map<String,Object> updateCategory(@ModelAttribute Category category){
         Map<String, Object> map = new HashMap<>();
@@ -87,7 +127,15 @@ public class CategoryController {
 
     }
 
-    //删除类别
+
+    /**
+     * 功能描述: //删除类别<br>
+     * 〈〉
+     * @Param: [id]
+     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     * @Author: tom
+     * @Date: 2019/10/21 17:43
+     */
     @DeleteMapping("/{id}")
     public Map<String,Object> deleteCategory(@PathVariable int id){
         Map<String, Object> map = new HashMap<>();
