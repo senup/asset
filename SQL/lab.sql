@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50643
 File Encoding         : 65001
 
-Date: 2019-10-19 22:14:50
+Date: 2019-10-21 17:46:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,29 +33,33 @@ CREATE TABLE `asset` (
   `cate_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`aid`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of asset
 -- ----------------------------
-INSERT INTO `asset` VALUES ('1', '笔记本电脑', '联想Y-30', '6999.00', '1', '学习使用', '', '1', '2019-10-14 19:15:59', '2019-10-08 19:16:02', '1', '1');
-INSERT INTO `asset` VALUES ('2', 'A4纸', '联想', null, null, '学习使用', null, null, '2019-10-18 20:37:35', null, '1', null);
-INSERT INTO `asset` VALUES ('3', 'typec数据线', null, null, null, '学习使用', null, null, null, null, '1', null);
-INSERT INTO `asset` VALUES ('4', '插座', null, null, null, '学习使用', null, null, null, null, '2', null);
-INSERT INTO `asset` VALUES ('5', '打印机', null, null, null, null, null, null, null, null, '3', null);
-INSERT INTO `asset` VALUES ('6', '台灯', null, null, null, null, null, null, null, null, '4', null);
-INSERT INTO `asset` VALUES ('7', '投影仪', null, null, null, null, null, null, null, null, '2', null);
-INSERT INTO `asset` VALUES ('8', '鼠标', null, null, null, null, null, null, null, null, '4', null);
-INSERT INTO `asset` VALUES ('9', '激光笔', null, null, null, null, null, null, null, null, '4', null);
-INSERT INTO `asset` VALUES ('10', '黑板', null, null, null, null, null, null, null, null, '4', null);
-INSERT INTO `asset` VALUES ('11', null, '联想', '0.00', null, null, null, null, '2019-10-15 15:31:17', null, '2', null);
-INSERT INTO `asset` VALUES ('19', '宠物狗', '柯基', '1555.00', '1', '学习使用', '', '1', '2019-10-14 20:53:37', null, '3', '1');
-INSERT INTO `asset` VALUES ('21', null, 'gggggggggg', '0.00', null, null, null, null, '2019-10-15 15:27:17', null, '3', null);
-INSERT INTO `asset` VALUES ('22', '旺财', null, null, null, null, null, null, '2019-10-18 20:35:09', null, null, null);
-INSERT INTO `asset` VALUES ('23', 'lv', null, '100.00', null, null, null, null, '2019-10-18 20:37:19', null, null, null);
-INSERT INTO `asset` VALUES ('25', 'cat', null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `asset` VALUES ('26', '狗狗', null, null, null, '学习使用', null, null, null, null, null, null);
-INSERT INTO `asset` VALUES ('27', '狗狗', null, null, null, null, null, null, '2019-10-18 20:07:52', null, null, null);
+INSERT INTO `asset` VALUES ('1', '电脑', '外星人', '9999.00', '1', '个人使用', '没有', '1', '2019-10-21 17:30:31', '2019-10-21 17:31:21', '1', '1');
+INSERT INTO `asset` VALUES ('2', 'A4纸', '联想', '2.00', '1', '学习使用', '4', '2', '2019-10-18 20:37:35', '2019-10-04 17:11:16', '1', '2');
+INSERT INTO `asset` VALUES ('3', 'typec数据线', '华为', '5.00', '2', '学习使用', '3', '3', '2019-10-21 17:12:37', '2019-10-04 17:11:16', '1', '1');
+INSERT INTO `asset` VALUES ('4', '插座', '小米', '6.00', '3', '学习使用', null, '2', '2019-10-21 17:12:41', '2019-10-04 17:11:16', '2', '3');
+INSERT INTO `asset` VALUES ('5', '打印机', '海思', '5.00', '45', null, null, '1', '2019-10-21 17:12:44', '2019-10-21 17:11:29', '3', '4');
+INSERT INTO `asset` VALUES ('6', '台灯', '格力', '3.00', '6', null, null, '2', '2019-10-21 17:12:58', '2019-10-21 17:12:03', '4', '2');
+INSERT INTO `asset` VALUES ('7', '投影仪', '啊', '5.00', '6', null, null, '3', '2019-10-21 17:13:02', '2019-10-21 17:12:07', '2', '4');
+INSERT INTO `asset` VALUES ('8', '鼠标', ' 的', '6.00', '3', null, null, '2', '2019-10-21 17:13:05', '2019-10-21 17:12:11', '4', '5');
+INSERT INTO `asset` VALUES ('9', '激光笔', null, '77.00', '2', null, null, '3', '2019-10-21 17:13:07', '2019-10-21 17:11:32', '4', '2');
+INSERT INTO `asset` VALUES ('10', '黑板', '森', '7.00', '4', null, null, '1', '2019-10-21 17:13:10', '2019-10-21 17:12:14', '4', '4');
+INSERT INTO `asset` VALUES ('19', '宠物狗', '柯基', '1555.00', '1', '学习使用', '', '1', '2019-10-14 20:53:37', '2019-10-21 17:12:17', '3', '1');
+INSERT INTO `asset` VALUES ('22', '旺财', null, '7.00', '2', null, null, '1', '2019-10-18 20:35:09', '2019-10-21 17:12:20', '1', '4');
+INSERT INTO `asset` VALUES ('23', 'lv', null, '100.00', '4', null, null, '3', '2019-10-18 20:37:19', '2019-10-21 17:12:24', '2', '2');
+INSERT INTO `asset` VALUES ('25', 'cat', null, '7.00', '5', null, null, '2', '2019-10-21 17:13:14', '2019-10-21 17:12:26', '3', '4');
+INSERT INTO `asset` VALUES ('26', '狗狗', null, '5.00', '3', '学习使用', null, '1', '2019-10-21 17:13:34', '2019-10-21 17:12:29', '1', '2');
+INSERT INTO `asset` VALUES ('28', '笔记本电脑', '玩家国度', '6999.00', '1', '备注：个人使用', '无', '1', '2019-10-20 18:21:25', '2019-10-21 17:12:32', '1', '1');
+INSERT INTO `asset` VALUES ('29', '邓生', 'a1', '9.90', '1', '无', '无', '0', '2019-10-20 20:24:48', '2019-10-08 19:16:02', '1', '1');
+INSERT INTO `asset` VALUES ('30', '鼠标,笔记本电脑', '雷蛇,玩家国度', '199.00', '5', '大赛奖品,备注：个人使用', '无,无', '1', '2019-10-20 18:55:38', '2011-09-01 03:30:33', '1', '1');
+INSERT INTO `asset` VALUES ('31', '笔记本电脑', ',玩家国度', '99.00', '1', ',备注：个人使用', ',无', '1', '2019-10-20 19:17:31', '2019-10-21 17:12:35', '2', '4');
+INSERT INTO `asset` VALUES ('32', '邓盛林', '国产', '9.90', '1', '备注', '无', '0', '2019-10-20 20:07:09', '2019-10-08 19:16:02', '1', '2');
+INSERT INTO `asset` VALUES ('33', '邓盛林', '国产', '9.90', '1', '备注', '无', '0', '2019-10-20 20:07:39', '2019-10-08 19:16:02', '1', '1');
+INSERT INTO `asset` VALUES ('34', '吉他', '雅马哈FG830', '2500.00', '1', '大赛奖品', '暂无', '1', '2019-10-21 17:29:09', '2019-10-21 17:12:17', '1', '1');
 
 -- ----------------------------
 -- Table structure for category
@@ -65,7 +69,7 @@ CREATE TABLE `category` (
   `cid` int(11) NOT NULL AUTO_INCREMENT,
   `cate_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`cid`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of category
@@ -81,6 +85,7 @@ INSERT INTO `category` VALUES ('8', '数码配件');
 INSERT INTO `category` VALUES ('9', '拓展配件');
 INSERT INTO `category` VALUES ('10', '网络设备');
 INSERT INTO `category` VALUES ('11', '无线网络');
+INSERT INTO `category` VALUES ('14', '哈哈');
 
 -- ----------------------------
 -- Table structure for lend
