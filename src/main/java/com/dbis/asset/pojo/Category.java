@@ -10,7 +10,10 @@ public class Category {
 
     private String cateName;
 
+    private Integer num;
+
     private List<Asset> assets;
+
 
     public Integer getCid() {
         return cid;

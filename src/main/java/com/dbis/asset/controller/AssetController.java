@@ -37,7 +37,7 @@ public class AssetController {
     @GetMapping
     public Map<String, Object> findAll(
             @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,
-            @RequestParam(defaultValue = "5",value = "pageSize") Integer pageSize
+            @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize
                                            ){
         PageHelper.startPage(pageNum,pageSize);
         List<Asset> list = assetMapper.selectAllWithCategory();
@@ -62,7 +62,7 @@ public class AssetController {
     @GetMapping("/find")
     public Map<String,Object> findByLike(@ModelAttribute Asset asset,
                                          @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,
-                                         @RequestParam(defaultValue = "5",value = "pageSize") Integer pageSize
+                                         @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize
                                          ){
         PageHelper.startPage(pageNum,pageSize);
         List<Asset> list = assetMapper.selectByLike(asset);

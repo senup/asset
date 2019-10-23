@@ -14,6 +14,9 @@ public interface AssetMapper {
     Asset selectByPrimaryKey(Integer aid);
 
     //
+
+
+    //
     Asset selectByNameWithCategory(String name);
 
     //

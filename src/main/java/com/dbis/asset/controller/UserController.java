@@ -33,8 +33,81 @@ public class UserController {
     private List<User> users;
     private User user = new User();
 
+    //--------------------------未测试------------------------------------
+    /*
+     * @Description //TODO 注册
+     *                  注册失败
+     *                      空或存在 返回-1
+     *                      密码为空 返回-2
+     *                      邮箱为空 返回-3
+     *                      数据库插入异常 返回0
+     *                  注册成功 返回1
+     * @Date 2019/10/23 0:57
+     * @Param [user]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @GetMapping("/register")
+    public Map<String, Object> register(User user){
+        Map<String, Object> map = new HashMap<>();
+        Integer i = userService.register(user);
+        if (i == 1){
+            List<User> users = userService.queryUserSingleCondition(user);
+            if (users.size() == 1){
+                User user1 = users.get(0);
+//                System.out.println(user1);
+                map.put("status", 1);
+                map.put("message",user.getUserName() + "注册成功！");
+                map.put("data",user1);
+            }else {
+                map.put("status", 0);
+                map.put("message","数据重复异常！");
+            }
+        } else if (i == -1){
+            map.put("status", 0);
+            map.put("message","用户名为空或已存在！");
+        } else if (i == -3) {
+            map.put("status", 0);
+            map.put("message","邮箱为空/不存在！");
+        } else {
+            map.put("status", 0);
+            map.put("message","数据库异常！");
+        }
+        return map;
+    }
 
+    /*
+     * @Description  TODO 登录校验
+     *                   失败
+     *                      用户名不存在返回0
+     *                      空返回-1
+     *                      密码错误返回-2
+     *                      登录成功返回1，
+     * @Date 2019/10/23 0:58
+     * @Param [user]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @GetMapping("/login")
+    public Map<String, Object> login(User user){
+        Map<String, Object> map = new HashMap<>();
+        Integer i = userService.login(user);
+        System.out.println(i);
+        if (i == 1){
+            List<User> users = userService.queryUserSingleCondition(user);
+            User user1 = users.get(0);
+            map.put("status", 1);
+            map.put("message",user.getUserName() + "登录成功！");
+            map.put("data",user1);
+        } else if (i == -2) {
+            map.put("status", 0);
+            map.put("message","密码错误！");
+        } else {
+            map.put("status", 0);
+            map.put("message","用户名为空或不存在！");
+        }
+        return map;
+    }
 
+    //-------------------------------------------------
     /*
      * @Description //TODO 查询所有用户(分页)
      * @Date 2019/10/20 13:48

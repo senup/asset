@@ -36,11 +36,12 @@ public class CategoryController {
     @GetMapping
     public Map<String,Object> findAll(
             @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,
-            @RequestParam(defaultValue = "5",value = "pageSize") Integer pageSize
+            @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize
     ){
         PageHelper.startPage(pageNum,pageSize);
         Map<String, Object> map = new HashMap<>();
-        List<Category> list = categoryMapper.selectAll();
+        //List<Category> list = categoryMapper.selectAll();
+        List<Category> list = categoryMapper.select();
         PageInfo<Category> info = new PageInfo<>(list);
         map.put("data",info);
         map.put("status",1);

@@ -5,11 +5,14 @@
   <resultMap id="BaseResultMap" type="com.dbis.asset.pojo.Category" >
     <id column="cid" property="cid" jdbcType="INTEGER" />
     <result column="cate_name" property="cateName" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
   </resultMap>
 
   <resultMap id="MapWithAsset" type="com.dbis.asset.pojo.Category">
     <id column="cid" property="cid"/>
     <result column="cate_name" property="cateName"/>
+    <result column="num" property="num"/>
+
 
     <collection property="assets" ofType="com.dbis.asset.pojo.Asset">
       <id column="aid" property="aid"/>
@@ -60,6 +63,14 @@
     left join
     asset as a
     on c.cid = a.cate_id
+  </select>
+
+  <select id="select" resultMap="MapWithAsset">
+    select cid,cate_name,count(a.cate_id) num
+    from asset a
+    RIGHT JOIN category c
+    on a.cate_id=c.cid
+    GROUP BY cid
   </select>
 
 
