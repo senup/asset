@@ -19,7 +19,8 @@ public interface CategoryMapper {
     //
     List<Category> select();
 
-
+    //根据名字查询信息
+    Category selectByName(String cateName);
 
     List<Category> selectWithAsset(int cid);
 

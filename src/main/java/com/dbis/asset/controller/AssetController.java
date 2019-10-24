@@ -1,15 +1,16 @@
 package com.dbis.asset.controller;
 
+import com.dbis.asset.enums.CommonEnum;
+import com.dbis.asset.exception.BizException;
 import com.dbis.asset.mapper.AssetMapper;
 import com.dbis.asset.pojo.Asset;
+import com.dbis.asset.result.ResultBody;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ClassName AssetController
@@ -35,17 +36,17 @@ public class AssetController {
      * @Date: 2019/10/19 19:11
      */
     @GetMapping
-    public Map<String, Object> findAll(
+    public ResultBody findAll(
             @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,
             @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize
                                            ){
         PageHelper.startPage(pageNum,pageSize);
         List<Asset> list = assetMapper.selectAllWithCategory();
+        if(list.isEmpty()){
+            throw  new BizException(CommonEnum.NOT_FOUND);
+        }
         PageInfo<Asset> info = new PageInfo<>(list);
-        Map<String, Object> map = new HashMap<>();
-        map.put("data",info);
-        map.put("status",1);
-        return map;
+        return ResultBody.success(info);
     }
 
 
@@ -60,17 +61,17 @@ public class AssetController {
      * @Date: 2019/10/21 17:42
      */
     @GetMapping("/find")
-    public Map<String,Object> findByLike(@ModelAttribute Asset asset,
+    public ResultBody findByLike(@ModelAttribute Asset asset,
                                          @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,
                                          @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize
                                          ){
         PageHelper.startPage(pageNum,pageSize);
         List<Asset> list = assetMapper.selectByLike(asset);
+        if(list.isEmpty()){
+            throw  new BizException(CommonEnum.NOT_FOUND);
+        }
         PageInfo<Asset> info = new PageInfo<>(list);
-        Map<String, Object> map = new HashMap<>();
-        map.put("data",info);
-        map.put("status",1);
-        return map;
+        return ResultBody.success(info);
     }
 
 
@@ -83,15 +84,20 @@ public class AssetController {
      * @Date: 2019/10/21 17:42
      */
     @PostMapping
-    public Map<String,Object> addAsset(@ModelAttribute Asset asset){
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        Date date=format.parse(asset.getPayTime());
-        Map<String, Object> map = new HashMap<>();
-        if(assetMapper.insert(asset)>0){
-            map.put("status",1);
-            return map;
+    public ResultBody addAsset(Asset asset){
+        if(asset.getAssetName().isEmpty()){
+            throw  new BizException(CommonEnum.BODY_NOT_MATCH.getResultCode(),"资产名不能为空！");
+        }
+        if(asset.getUserId()==null){
+            throw  new BizException(CommonEnum.BODY_NOT_MATCH.getResultCode(),"用户userId不能为空！");
+        }
+        if(asset.getCateId()==null){
+            throw  new BizException(CommonEnum.BODY_NOT_MATCH.getResultCode(),"类别cateId不能为空！");
+        }
+        if(assetMapper.insert(asset)!=1){
+            throw  new BizException("-1","插入操作失败！");
         }else{
-            throw new RuntimeException("error");
+            return ResultBody.success();
         }
     }
 
@@ -104,15 +110,13 @@ public class AssetController {
      * @Author: tom
      * @Date: 2019/10/21 17:42
      */
-    @DeleteMapping("/{id}")
-    public Map<String,Object> deleteAsset(@PathVariable int id){
-        Map<String, Object> map = new HashMap<>();
-        if(assetMapper.deleteByPrimaryKey(id)>0){
-            map.put("status" , 1);
-            return map;
-        }else{
-            throw new RuntimeException("error");
+    @DeleteMapping
+    public ResultBody deleteAsset(int aid){
+        int i = assetMapper.deleteByPrimaryKey(aid);
+        if(i != 1){
+            throw  new BizException("-1","删除操作失败！");
         }
+        return ResultBody.success();
     }
 
 
@@ -126,24 +130,15 @@ public class AssetController {
      * @Author: tom
      * @Date: 2019/10/21 17:42
      */
-    @GetMapping("/{id}")
-    public Map<String,Object> findAssetById(@PathVariable int id){
-        Map<String, Object> map = new HashMap<>();
-        Asset data = assetMapper.selectByPrimaryKeyWithCategory(id);
-        map.put("status",1);
-        map.put("data",data);
-        return map;
+    @GetMapping("/detail")
+    public ResultBody findAssetById(int aid){
+        Asset data = assetMapper.selectByPrimaryKeyWithCategory(aid);
+        if(data==null){
+            throw new BizException(CommonEnum.NOT_FOUND);
+        }
+        return ResultBody.success(data);
     }
 
-//    //根据资产名称查找资产信息
-//    @GetMapping("/name/")
-//    public Map<String,Object> findDeviceByName(String name){
-//        Map<String, Object> map = new HashMap<>();
-//        Asset data = assetMapper.selectByNameWithCategory(name);
-//        map.put("status",1);
-//        map.put("data",data);
-//        return map;
-//    }
 
 
     /**
@@ -154,15 +149,16 @@ public class AssetController {
      * @Author: tom
      * @Date: 2019/10/21 17:42
      */
-    @PutMapping("/")
-    public Map<String,Object> updateDevice(@ModelAttribute Asset asset){
-        Map<String, Object> map = new HashMap<>();
-        if(assetMapper.updateByPrimaryKey(asset)>0){
-            map.put("status" , 1);
-            return map;
-        }else{
-            throw new RuntimeException("error");
+    @PutMapping
+    public ResultBody updateAsset(Asset asset){
+        if(asset.getAid()==null){
+            throw  new BizException(CommonEnum.BODY_NOT_MATCH.getResultCode(),"资产aid不能为空！");
         }
+        int i = assetMapper.updateByPrimaryKey(asset);
+        if( i !=1){
+            throw  new BizException("-1","更新操作失败！");
+        }
+        return ResultBody.success();
     }
 
 

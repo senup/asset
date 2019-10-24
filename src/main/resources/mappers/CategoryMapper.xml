@@ -56,6 +56,11 @@
     cid, cate_name
   </sql>
 
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="String">
+    select * from category
+    where cate_name = #{cateName}
+  </select>
+
 
   <select id="selectAll" resultMap="MapWithAsset">
     select c.*,a.*

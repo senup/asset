@@ -10,6 +10,7 @@ public class AssetApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AssetApplication.class , args);
+        System.out.println("程序正在运行...");
     }
 
 }

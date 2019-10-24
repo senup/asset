@@ -2,10 +2,12 @@ package com.dbis.asset.pojo;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Data
 public class Category {
+
     private Integer cid;
 
     private String cateName;

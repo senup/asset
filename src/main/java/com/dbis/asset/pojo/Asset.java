@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 @Data
 public class Asset {
+
     private Integer aid;//资产ID
 
     private String assetName;//资产名称
