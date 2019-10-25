@@ -110,8 +110,8 @@ public class AssetController {
      * @Author: tom
      * @Date: 2019/10/21 17:42
      */
-    @DeleteMapping
-    public ResultBody deleteAsset(int aid){
+    @DeleteMapping("/{aid}")
+    public ResultBody deleteAsset(@PathVariable int aid){
         int i = assetMapper.deleteByPrimaryKey(aid);
         if(i != 1){
             throw  new BizException("-1","删除操作失败！");
@@ -130,8 +130,8 @@ public class AssetController {
      * @Author: tom
      * @Date: 2019/10/21 17:42
      */
-    @GetMapping("/detail")
-    public ResultBody findAssetById(int aid){
+    @GetMapping("/detail/{aid}")
+    public ResultBody findAssetById(@PathVariable int aid){
         Asset data = assetMapper.selectByPrimaryKeyWithCategory(aid);
         if(data==null){
             throw new BizException(CommonEnum.NOT_FOUND);

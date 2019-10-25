@@ -57,8 +57,8 @@ public class CategoryController {
      * @Author: tom
      * @Date: 2019/10/24 22:25
      */
-    @GetMapping("/")
-    public ResultBody findById(int cid){
+    @GetMapping("/{cid}")
+    public ResultBody findById(@PathVariable int cid){
         Category category = categoryMapper.selectByPrimaryKey(cid);
         //如果找不到该资产
         if(category==null){
@@ -77,8 +77,8 @@ public class CategoryController {
      * @Author: tom
      * @Date: 2019/10/24 22:25
      */
-    @GetMapping("/detail")
-    public ResultBody findWithAssetById(int cid,
+    @GetMapping("/detail/{cid}")
+    public ResultBody findWithAssetById(@PathVariable int cid,
                                         @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,
                                         @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize
     ){
@@ -148,8 +148,8 @@ public class CategoryController {
      * @Author: tom
      * @Date: 2019/10/24 22:25
      */
-    @DeleteMapping()
-    public ResultBody deleteCategory(int cid){
+    @DeleteMapping("/{cid}")
+    public ResultBody deleteCategory(@PathVariable int cid){
         int i = categoryMapper.deleteByPrimaryKey(cid);
         if(i != 1){
             throw  new BizException("-1","删除操作失败！");
